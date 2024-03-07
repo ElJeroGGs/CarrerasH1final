@@ -38,7 +38,7 @@ public void iniciarCarrera(){
 
     while (res.getValor(0)<1000 || res.getValor(1)<1000 ||  res.getValor(2)<1000)
     {
-        this.vistaMain.pintapanel(res);
+        this.vistaMain.pintapanel(this.res);
     }
     
 }
