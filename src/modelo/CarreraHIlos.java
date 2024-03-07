@@ -22,11 +22,6 @@ public class CarreraHIlos extends Thread implements Runnable {
         while (posicionActual < META) {
             int avance = random.nextInt(25) + 1;
             posicionActual += avance;
-            System.out.println(this.name + (id) + " avanzo " + avance + " unidades. Posicion actual: " + posicionActual);
-            if (posicionActual >= META) {
-                llegoMeta[id] = true;
-                System.out.println("Hilo " + (id) + " llegó a la meta!");
-            }
             try {
                 Thread.sleep(80); 
             } catch (InterruptedException e) {
