@@ -1,0 +1,64 @@
+import java.util.Random;
+package modelo;
+public class CarreraHilos implements Runnable {
+    private static final int META = 100;
+    private static final int NUM_HILOS = 4;
+    private static int posicionActual = 0;
+    private static boolean[] llegoMeta = new boolean[NUM_HILOS];
+    private int id;
+
+    public CarreraHilos(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public void run() {
+        Random random = new Random();
+        while (posicionActual < META && !llegoMeta[id]) {
+            int avance = random.nextInt(10) + 1;
+            posicionActual += avance;
+            System.out.println("Hilo " + (id+1) + " avanzo " + avance + " unidades. Posicion actual: " + posicionActual);
+            if (posicionActual >= META) {
+                llegoMeta[id] = true;
+                System.out.println("Hilo " + (id+1) + " llego a la meta!");
+            }
+            try {
+                Thread.sleep(100); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread[] hilos = new Thread[NUM_HILOS];
+
+        for (int i = 0; i < NUM_HILOS; i++) {
+            hilos[i] = new Thread(new CarreraHilos(i));
+            hilos[i].start();
+        }
+
+        for (Thread hilo : hilos) {
+            try {
+                hilo.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("\nOrden de llegada:");
+        for (int i = 0; i < NUM_HILOS; i++) {
+            for (int j = 0; j < NUM_HILOS; j++) {
+                if (llegoMeta[j] && !llegoMeta[i] && j != i) {
+                    continue;
+                } else if (llegoMeta[j] && llegoMeta[i] && j != i && j > i) {
+                    System.out.println("Hilo " + (i+1) + " llegó antes que Hilo " + (j+1));
+                } else if (llegoMeta[j] && llegoMeta[i] && j != i && j < i) {
+                    System.out.println("Hilo " + (j+1) + " llego antes que Hilo " + (i+1));
+                } else if (j == NUM_HILOS - 1 && !llegoMeta[i]) {
+                    System.out.println("Hilo " + (i+1) + " no llegó a la meta");
+                }
+            }
+        }
+    }
+}
