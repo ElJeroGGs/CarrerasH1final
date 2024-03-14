@@ -30,6 +30,10 @@ public class CarreraHIlos extends Thread implements Runnable {
 
             resultado res = this.res;
             res.setValor(id, posicionActual);
+
+            if(posicionActual >= META){
+                System.out.println("El piloto " + this.getName() + " ha llegado a la meta");
+            }
         }
     }
 
