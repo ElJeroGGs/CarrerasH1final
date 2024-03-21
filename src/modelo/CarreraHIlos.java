@@ -18,10 +18,10 @@ public class CarreraHIlos extends Thread implements Runnable {
 
     @Override
     public void run() {
-        Random random = new Random();
+        //Random random = new Random();
         while (posicionActual < META) {
-            int avance = random.nextInt(25) + 1;
-            posicionActual += avance;
+            //int avance = random.nextInt(25) + 1;
+            //posicionActual += avance;
             try {
                 Thread.sleep(80); 
             } catch (InterruptedException e) {
@@ -30,6 +30,7 @@ public class CarreraHIlos extends Thread implements Runnable {
 
             resultado res = this.res;
             res.setValor(id, posicionActual);
+
         }
     }
 
@@ -42,6 +43,11 @@ public class CarreraHIlos extends Thread implements Runnable {
 public void setResultado(modelo.resultado res){
 
     this.res = res;
+}
+
+public void setPosicionActual(int valor) {
+    
+    this.posicionActual += valor;
 }
 
 }

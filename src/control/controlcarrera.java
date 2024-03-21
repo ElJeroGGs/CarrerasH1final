@@ -1,5 +1,9 @@
 package control;
 
+import modelo.Buffer;
+import modelo.Consumidor;
+import modelo.Productor;
+
 public class controlcarrera {
 
     private modelo.CarreraHIlos Checo;
@@ -36,11 +40,21 @@ public void iniciarCarrera(){
     Max.start();
     Hamilton.start();
 
+    Buffer b1 = new Buffer();
+    Productor p1 = new Productor(b1);
+    Consumidor c1 = new Consumidor(b1);
+
+    p1.setpiloto(Checo);
+    c1.setpiloto(Checo);
+
+    p1.start();
+    c1.start();
+    
     while (res.getValor(0)<1000 || res.getValor(1)<1000 ||  res.getValor(2)<1000)
     {
         this.vistaMain.pintapanel(this.res);
     }
-    
+  
 }
 
 public void setResultado(modelo.resultado res){
